@@ -1,0 +1,119 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+* {
+    margin: 0;
+    padding: 0; 
+    box-sizing: border-box;
+}
+body {
+    font: 15px Segoe UI;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+form#login-form {
+    flex: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #333333;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    input, button {
+        padding: 16px;
+        width: 200px;
+        font-size: 18px;
+        margin: 8px;
+        border-radius: 16px;
+        border: 0;
+        box-shadow: 0 3px 5px rgba(black, 0.2) inset;
+        text-align: center;
+    }
+    button {
+        box-shadow: 0 3px 5px rgba(black, 0.2);
+    }
+    p {
+        font-size: calc(50px + 2vw);
+        opacity: 0.5;
+        text-align: center;
+        color: hsl(0, 0%, 70%);
+        margin-bottom: calc(24px + 1vw);
+        font-weight: 600;
+        span.team-chat-colour {
+            color: hsl(200, 60%, 60%);
+        }
+
+    }
+    
+}
+form#messenger {
+    display: flex;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    padding:16px;
+    background-color: #fff;
+    box-shadow: 0 16px 8px 16px rgba(black, 0.2);
+    #m {
+        flex: 1;
+        height: 50px;
+        padding: 16px;
+        border: 0;
+        border-radius: 16px;
+        background-color: #f8f8f8; 
+        box-shadow: 0 3px 4px rgba(black, 0.2) inset;
+
+    }
+    #send {
+        flex: 0;
+        display: block;
+        width: 100px;
+        padding: 16px;
+        background-color: #f8f8f8;
+        border: 0;
+        margin-left: 16px;
+        border-radius: 16px;
+        box-shadow: 0 3px 5px rgba(black, 0.2);
+
+    }
+}
+.messages-container {
+    overflow-y: scroll;
+    height: calc(100vh - 82px);
+}
+#messages {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    background-color: #fff;
+    padding: 16px;
+    .message {
+        flex: 0;
+        align-self: flex-start;
+        padding: 8px;
+        margin-top: 8px;
+        color: #000;
+        border-radius: 8px 8px 8px 0;
+        background-color: #ddd;
+        box-shadow: 0 2px 4px rgba(black, 0.2), 0 -1px 0px rgba(black, 0.1) inset, 0 1px 0 rgba(white, 0.5) inset;
+    }
+    .self-message {
+        @extend .message;
+        align-self: flex-end;
+        color: #333;
+        border-radius: 8px 8px 0 8px;
+        background-color: #eee;
+    }
+    .message-nickname {
+        opacity: 0.4;
+        font-size: 13px;
+    }
+}

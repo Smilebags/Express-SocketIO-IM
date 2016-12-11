@@ -1,0 +1,26 @@
+<!doctype html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>TeamChat - Login</title>
+        <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="scripts/functions.js"></script>
+        
+        <link href="stylesheets/style.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <form action="" id="login-form">
+            <p><b><span class="team-chat-colour">T</span><span class="custom-colour">eam</span></b><i><span class="team-chat-colour">Chat</span></i></p>
+            <input id="nickname" placeholder="Nickname"/>
+            <button id="login">Login</button>
+        </form>
+        <div class="messages-container"><ul id="messages"></ul></div>
+        <form action="" id="messenger">
+            <input id="m" autocomplete="off" /><button id="send">Send</button>
+        </form>
+        <audio id="message-sound"><source src="audio/message.mp3" type="audio/mp3"></audio>
+        <script src="scripts/scripts.js"></script>
+        <script src="scripts/socket.js"></script>
+    </body>
+</html>
