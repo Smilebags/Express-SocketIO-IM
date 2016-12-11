@@ -49,9 +49,6 @@ function escapeHtml(string: string) {
 }
 
 
-
-
-
 //requires
 var express = require('express');
 var app = express();
