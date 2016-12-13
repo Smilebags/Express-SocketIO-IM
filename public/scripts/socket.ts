@@ -44,14 +44,41 @@ socket.on("user list", function (msg) {
 socket.on("chat list", function (msg) {
     messages = msg;
     for (var i = 0; i < messages.length; i++) {
-        var text = "<p class='message-nickname'>";
-        text += messages[i].Nickname;
-        text += "</p><p>";
-        text += messages[i].Contents;
-        text += "</p>";
-        $("#messages").append($("<li>").html(text).css("background-color", "rgb(" + messages[i].Colour.r + "," + messages[i].Colour.g + "," + messages[i].Colour.b + ")").addClass("message"));
+        switch (messages[i].Type) {
+            case "message":
+                var text = "<p class='message-nickname'>";
+                text += messages[i].Nickname;
+                text += "</p><p>";
+                text += messages[i].Contents;
+                text += "</p>";
+                $("#messages").append($("<li>").html(text).css("background-color", "rgb(" + messages[i].Colour.r + "," + messages[i].Colour.g + "," + messages[i].Colour.b + ")").addClass("message"));
+                break;
+            case "stamp":
+                var text = "<p class='message-nickname'>";
+                text += messages[i].Nickname;
+                text += "</p><img class='message-stamp' src='";
+                text += messages[i].Contents; 
+                text += "' />";
+                $("#messages").append($("<li>").html(text).css("background-color", "rgb(" + messages[i].Colour.r + "," + messages[i].Colour.g + "," + messages[i].Colour.b + ")").addClass("message"));
+                break;
+            case "disconnect":
+                var text = "<p class='message-nickname'>";
+                text += messages[i].Nickname;
+                text += " Disconnected</p>"; 
+                $("#messages").append($("<li>").html(text).css("background-color", "rgb(" + messages[i].Colour.r + "," + messages[i].Colour.g + "," + messages[i].Colour.b + ")").addClass("message"));
+                break;
+            default:
+                var text = "<p class='message-nickname'>"; 
+                text += escapeHtml(messages[i].Nickname);
+                text += "</p><p>";
+                text += escapeHtml(messages[i].Contents);
+                text += "</p>";
+                $("#messages").append($("<li>").html(text).css("background-color", "rgb(" + messages[i].Colour.r + "," + messages[i].Colour.g + "," + messages[i].Colour.b + ")").addClass("message"));
+                break;
+        }
     }
     $(".messages-container").trigger('newMessage');
+ 
 });
 
 socket.on("login accept", function(msg) {

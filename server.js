@@ -31,14 +31,13 @@ io.on('connection', function (socket) {
                     updateUser(loggedInUsers[j], SocketID, f.escapeHtml(socket.id));
                     socket.emit("user list", loggedInUsers);
                     socket.emit("message list", messages);
-                    console.log(JSON.stringify(loggedInUsers[j]));
+                    console.log("Logged in Users: " + JSON.stringify(loggedInUsers[j]));
                 }
             }
         }
         else {
             console.log("Login Request: " + JSON.stringify(msg));
             var socketID = socket.id;
-            console.log(JSON.stringify(msg));
             if (msg.Nickname !== "") {
                 var nickNumber = f.makeNickNumber(f.escapeHtml(msg.Nickname));
                 var colour = f.nickNumberToColour(nickNumber);
@@ -73,20 +72,19 @@ io.on('connection', function (socket) {
         });
     });
     socket.on('disconnect', function () {
-        var nickname;
-        var msg;
+        var user;
         var positionInArray;
-        var colour;
         for (var i = 0; i < loggedInUsers.length; i++) {
             if (loggedInUsers[i].SocketID == socket.id) {
-                nickname = loggedInUsers[i].Nickname;
-                colour = loggedInUsers[i].Colour;
+                user = loggedInUsers[i];
                 positionInArray = i;
             }
         }
-        msg = { "Nickname": nickname, "Colour": colour };
+        var msg = new f.Message("disconnect", user.Nickname, user.Colour, "");
         console.log(msg.Nickname + ' disconnected.');
         socket.broadcast.emit("user disconnect", msg);
+        messages.push(msg);
+        //loggedInUsers.splice(positionInArray, 1);
     });
 });
 http.listen(port, function () {
