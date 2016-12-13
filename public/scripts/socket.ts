@@ -24,18 +24,29 @@ $("form#messenger").submit(function() {
     return false;
 });
 
+$("#stamps").click(function() {
+    var messageContents = 2;
+    var msg = new Message("stamp", me.Nickname, me.Colour, messageContents);
+    socket.emit("chat stamp", msg);
+    var local = "<img class='message-stamp' src='";
+    //local+= findStampURL(1);
+    local += "/images/stamps/2.jpg";
+    local += "'/>";
+    $("#messages").append($("<li>").html(local).addClass("self-message").css("background-color", "rgb(" + me.Colour.r + "," + me.Colour.g + "," + me.Colour.b + ")"));
+    $(".messages-container").trigger('newMessage');
+    return false;
+});
+
 socket.on("user list", function (msg) {
     loggedInUsers = msg;
-    console.log(loggedInUsers.length + " logged in users.")
 });
 
 socket.on("chat list", function (msg) {
     messages = msg;
-    console.log("Loading all existing messages.");
     for (var i = 0; i < messages.length; i++) {
         var text = "<p class='message-nickname'>";
         text += messages[i].Nickname;
-        text += "</h2><p>";
+        text += "</p><p>";
         text += messages[i].Contents;
         text += "</p>";
         $("#messages").append($("<li>").html(text).css("background-color", "rgb(" + messages[i].Colour.r + "," + messages[i].Colour.g + "," + messages[i].Colour.b + ")").addClass("message"));
@@ -56,7 +67,7 @@ socket.on("login reject", function() {
 socket.on("chat message", function(msg) {
     var text = "<p class='message-nickname'>";
     text += msg.Nickname;
-    text += "</h2><p>";
+    text += "</p><p>";
     text += msg.Contents;
     text += "</p>";
     $("#messages").append($("<li>").html(text).css("background-color", "rgb(" + msg.Colour.r + "," + msg.Colour.g + "," + msg.Colour.b + ")").addClass("message"));
@@ -66,9 +77,9 @@ socket.on("chat message", function(msg) {
 socket.on("chat stamp", function(msg) {
     var text = "<p class='message-nickname'>";
     text += msg.Nickname;
-    text += "</h2><img class='message-stamp' src='";
-    text += msg.URL;
-    text += "' ></p>";
+    text += "</p><img class='message-stamp' src='";
+    text += msg.Contents; 
+    text += "' />";
     $("#messages").append($("<li>").html(text).css("background-color", "rgb(" + msg.Colour.r + "," + msg.Colour.g + "," + msg.Colour.b + ")").addClass("message"));
     $(".messages-container").trigger('newMessage');
     $("#message-sound")[0].play();

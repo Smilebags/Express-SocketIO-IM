@@ -63,4 +63,8 @@ function Message(type, nickname, colour, contents) {
     this.Colour = colour;
     this.Contents = contents;
 }
-module.exports = exports = { HSVtoRGB: HSVtoRGB, makeNickNumber: makeNickNumber, nickNumberToColour: nickNumberToColour, escapeHtml: escapeHtml, Message: Message };
+function findStampURL(stampID) {
+    var URL = "/images/stamps/" + stampID + ".jpg";
+    return URL;
+}
+module.exports = exports = { HSVtoRGB: HSVtoRGB, makeNickNumber: makeNickNumber, nickNumberToColour: nickNumberToColour, escapeHtml: escapeHtml, Message: Message, findStampURL: findStampURL };

@@ -71,9 +71,10 @@ io.on('connection', function(socket){
     socket.on("chat stamp", function (incomingMessage) {
       if (incomingMessage) {
         var outputMessage = incomingMessage;
+        outputMessage.Contents = f.findStampURL(incomingMessage.Contents);
         messages.push(outputMessage);
         socket.broadcast.emit("chat stamp", outputMessage);
-        console.log(f.escapeHtml(msg.Nickname) + ": " + f.escapeHtml(outputMessage.Message));
+        console.log(f.escapeHtml(msg.Nickname) + ": " + outputMessage.Contents);
       }
     });
   });

@@ -82,7 +82,9 @@ form#messenger {
         margin-left: 16px;
         border-radius: 16px;
         box-shadow: 0 3px 5px rgba(black, 0.2);
-
+    }
+    #stamps {
+        @extend #send;
     }
 }
 .messages-container {

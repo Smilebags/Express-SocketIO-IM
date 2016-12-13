@@ -4,10 +4,8 @@ $(document).ready(function() {
         $(".messages-container").scrollTop(32 + $("#messages").height() - $(".messages-container").height());
         }
     });
-    console.log($(".messages-container").scrollTop() + ", " + $("#messages").height());
     var scrollHeight = $("#messages").height();
     $(".messages-container").scrollTop(scrollHeight);
-    console.log($(".messages-container").scrollTop() + ", " + $("#messages").height());
     var messagesScrolled = false;
     $("form#login-form #nickname").on("input", function() {
     var string = $("#nickname").val();
@@ -18,7 +16,6 @@ $(document).ready(function() {
 });
 
 $(".messages-container").scroll(function(){
-    console.log($(".messages-container").scrollTop() + ", " + $("#messages").height());
     if ($(".messages-container").scrollTop() + $(".messages-container").height() >= $("#messages").height()) {
         messagesScrolled = false;
     } else {
