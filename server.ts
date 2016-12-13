@@ -4,10 +4,6 @@
 /// <reference path=".vscode/jquery.d.ts" />
 /// <reference path="public/scripts/functions.ts" />
 
-
-
-
-
 //requires
 var express = require('express');
 var app = express();
@@ -15,6 +11,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var fs = require('fs');
 var fns = require('./public/scripts/functions.ts');
+
 //convert HSB colours to RGB
 
 
@@ -79,6 +76,14 @@ io.on('connection', function(socket){
         messages.push(chatMessage);
         socket.broadcast.emit("chat message", chatMessage);
         console.log(escapeHtml(msg.Nickname) + ": " + escapeHtml(chatMessage.Message));
+      }
+    });
+    socket.on("chat stamp", function (incomingMessage) {
+      if (incomingMessage) {
+        var outputMessage = incomingMessage;
+        messages.push(outputMessage);
+        socket.broadcast.emit("chat stamp", outputMessage);
+        console.log(escapeHtml(msg.Nickname) + ": " + escapeHtml(outputMessage.Message));
       }
     });
   });

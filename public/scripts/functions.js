@@ -49,6 +49,7 @@ function escapeHtml(string) {
         return entityMap[s];
     });
 }
+
 function Message(type, nickname, colour, contents) {
     this.Type = type;
     this.Nickname = nickname;
