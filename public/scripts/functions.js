@@ -45,14 +45,22 @@ function nickNumberToColour(number) {
     return HSVtoRGB(((number % 1000) / 1000), 0.5, 0.8);
 }
 function escapeHtml(string) {
+    var entityMap = {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': '&quot;',
+        "'": '&#39;',
+        "/": '&#x2F;'
+    };
     return String(string).replace(/[&<>"'\/]/g, function (s) {
         return entityMap[s];
     });
 }
-
 function Message(type, nickname, colour, contents) {
     this.Type = type;
     this.Nickname = nickname;
     this.Colour = colour;
     this.Contents = contents;
 }
+module.exports = exports = { HSVtoRGB: HSVtoRGB, makeNickNumber: makeNickNumber, nickNumberToColour: nickNumberToColour, escapeHtml: escapeHtml, Message: Message };

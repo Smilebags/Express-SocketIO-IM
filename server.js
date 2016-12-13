@@ -9,19 +9,11 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var fs = require('fs');
-var fns = require('./public/scripts/functions.ts');
-//convert HSB colours to RGB
+var f = require('./public/scripts/functions.js');
+console.log("makeNickNumber: " + typeof f.makeNickNumber);
 var port = 8080;
 var loggedInUsers = [];
 var messages = [];
-var entityMap = {
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': '&quot;',
-    "'": '&#39;',
-    "/": '&#x2F;'
-};
 app.use(express.static('public'));
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/templates/header.html');
@@ -36,7 +28,7 @@ io.on('connection', function (socket) {
             for (var j = 0; j < loggedInUsers.length; j++) {
                 if (loggedInUsers[j].ID == socket.ID) {
                     console.log("updating user");
-                    updateUser(loggedInUsers[j], SocketID, socket.id);
+                    updateUser(loggedInUsers[j], SocketID, f.escapeHtml(socket.id));
                     socket.emit("user list", loggedInUsers);
                     socket.emit("message list", messages);
                     console.log(JSON.stringify(loggedInUsers[j]));
@@ -48,13 +40,13 @@ io.on('connection', function (socket) {
             var socketID = socket.id;
             console.log(JSON.stringify(msg));
             if (msg.Nickname !== "") {
-                var nickNumber = makeNickNumber(escapeHtml(msg.Nickname));
-                var colour = nickNumberToColour(nickNumber);
-                var newUser = { "Nickname": escapeHtml(msg.Nickname), "SocketID": socketID, "Colour": colour, "ID": loggedInUsers.length };
+                var nickNumber = f.makeNickNumber(f.escapeHtml(msg.Nickname));
+                var colour = f.nickNumberToColour(nickNumber);
+                var newUser = { "Nickname": f.escapeHtml(msg.Nickname), "SocketID": socketID, "Colour": colour, "ID": loggedInUsers.length };
                 loggedInUsers.push(newUser);
                 socket.emit("login accept", newUser);
                 socket.emit("user list", loggedInUsers);
-                socket.emit("message list", messages);
+                socket.emit("chat list", messages);
                 console.log(JSON.stringify(messages));
                 socket.broadcast.emit("user login", newUser);
             }
@@ -64,10 +56,10 @@ io.on('connection', function (socket) {
         }
         socket.on("chat message", function (incomingMessage) {
             if (incomingMessage) {
-                var chatMessage = new Message("message", incomingMessage.Nickname, incomingMessage.Colour, incomingMessage.Contents);
+                var chatMessage = incomingMessage;
                 messages.push(chatMessage);
                 socket.broadcast.emit("chat message", chatMessage);
-                console.log(escapeHtml(msg.Nickname) + ": " + escapeHtml(chatMessage.Message));
+                console.log(f.escapeHtml(msg.Nickname) + ": " + f.escapeHtml(chatMessage.Contents));
             }
         });
         socket.on("chat stamp", function (incomingMessage) {
@@ -75,7 +67,7 @@ io.on('connection', function (socket) {
                 var outputMessage = incomingMessage;
                 messages.push(outputMessage);
                 socket.broadcast.emit("chat stamp", outputMessage);
-                console.log(escapeHtml(msg.Nickname) + ": " + escapeHtml(outputMessage.Message));
+                console.log(f.escapeHtml(msg.Nickname) + ": " + f.escapeHtml(outputMessage.Message));
             }
         });
     });

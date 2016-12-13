@@ -3,7 +3,7 @@ var loggedInUsers = [];
 var messages = [];
 var me;
 
-
+$("#nickname").focus();
 $("form#login-form").submit(function() {
     var msg = {"Nickname": $("#nickname").val()};
     if (me) {   
@@ -18,7 +18,7 @@ $("form#messenger").submit(function() {
     var messageContents = $("#m").val();
     var msg = new Message("message", me.Nickname, me.Colour, messageContents);
     socket.emit("chat message", msg);
-    $("#messages").append($("<li>").text(msg).addClass("self-message").css("background-color", "rgb(" + me.Colour.r + "," + me.Colour.g + "," + me.Colour.b + ")"));
+    $("#messages").append($("<li>").text(msg.Contents).addClass("self-message").css("background-color", "rgb(" + me.Colour.r + "," + me.Colour.g + "," + me.Colour.b + ")"));
     $("#m").val("");
     $(".messages-container").trigger('newMessage');
     return false;
@@ -29,14 +29,14 @@ socket.on("user list", function (msg) {
     console.log(loggedInUsers.length + " logged in users.")
 });
 
-socket.on("message list", function (msg) {
+socket.on("chat list", function (msg) {
     messages = msg;
     console.log("Loading all existing messages.");
     for (var i = 0; i < messages.length; i++) {
         var text = "<p class='message-nickname'>";
         text += messages[i].Nickname;
         text += "</h2><p>";
-        text += messages[i].Message;
+        text += messages[i].Contents;
         text += "</p>";
         $("#messages").append($("<li>").html(text).css("background-color", "rgb(" + messages[i].Colour.r + "," + messages[i].Colour.g + "," + messages[i].Colour.b + ")").addClass("message"));
     }
@@ -44,6 +44,7 @@ socket.on("message list", function (msg) {
 });
 
 socket.on("login accept", function(msg) {
+    $("#m").focus();
     $("#login-form").fadeOut();
     $(document).prop('title', 'TeamChat - ' + msg.Nickname);
     me = msg;
@@ -92,4 +93,7 @@ socket.on('connect', function() {
     if (me) {
         $("#login").attr("disabled", false);
     }
+});
+socket.on('debug alert', function(msg) {
+    alert(msg);
 });
