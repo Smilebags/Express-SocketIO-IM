@@ -75,7 +75,7 @@ io.on('connection', function(socket){
     }
     socket.on("chat message", function(incomingMessage) {
       if(incomingMessage) {
-        var chatMessage = {"Nickname": msg.Nickname, "Message": escapeHtml(incomingMessage), "Colour": colour};
+        var chatMessage = new Message("message", incomingMessage.Nickname, incomingMessage.Colour, incomingMessage.Contents);
         messages.push(chatMessage);
         socket.broadcast.emit("chat message", chatMessage);
         console.log(escapeHtml(msg.Nickname) + ": " + escapeHtml(chatMessage.Message));
