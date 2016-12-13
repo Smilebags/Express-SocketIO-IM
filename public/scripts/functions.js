@@ -44,3 +44,8 @@ function makeNickNumber(string) {
 function nickNumberToColour(number) {
     return HSVtoRGB(((number % 1000) / 1000), 0.5, 0.8);
 }
+function escapeHtml(string) {
+    return String(string).replace(/[&<>"'\/]/g, function (s) {
+        return entityMap[s];
+    });
+}

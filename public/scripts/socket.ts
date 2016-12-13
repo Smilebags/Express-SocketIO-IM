@@ -61,6 +61,16 @@ socket.on("chat message", function(msg) {
     $(".messages-container").trigger('newMessage');
     $("#message-sound")[0].play();
 });
+socket.on("chat stamp", function(msg) {
+    var text = "<p class='message-nickname'>";
+    text += msg.Nickname;
+    text += "</h2><img class='message-stamp' src='";
+    text += msg.URL;
+    text += "' ></p>";
+    $("#messages").append($("<li>").html(text).css("background-color", "rgb(" + msg.Colour.r + "," + msg.Colour.g + "," + msg.Colour.b + ")").addClass("message"));
+    $(".messages-container").trigger('newMessage');
+    $("#message-sound")[0].play();
+});
 socket.on("user disconnect", function(msg) {
     $("#messages").append($("<li>").html("<p class='message-nickname'>" + msg.Nickname + " disconnected.</p>").addClass("message").css("background-color", "rgb(" + msg.Colour.r + "," + msg.Colour.g + "," + msg.Colour.b + ")"));
     $(".messages-container").trigger('newMessage');
