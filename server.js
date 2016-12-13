@@ -9,7 +9,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var fs = require('fs');
-var fns = require('public/scripts/functions.ts');
+var fns = require('./public/scripts/functions.ts');
 //convert HSB colours to RGB
 var port = 8080;
 var loggedInUsers = [];
@@ -64,7 +64,7 @@ io.on('connection', function (socket) {
         }
         socket.on("chat message", function (incomingMessage) {
             if (incomingMessage) {
-                var chatMessage = { "Nickname": msg.Nickname, "Message": escapeHtml(incomingMessage), "Colour": colour };
+                var chatMessage = new Message("message", incomingMessage.Nickname, incomingMessage.Colour, incomingMessage.Contents);
                 messages.push(chatMessage);
                 socket.broadcast.emit("chat message", chatMessage);
                 console.log(escapeHtml(msg.Nickname) + ": " + escapeHtml(chatMessage.Message));

@@ -12,7 +12,8 @@ $("form#login-form").submit(function () {
     return false;
 });
 $("form#messenger").submit(function () {
-    var msg = $("#m").val();
+    var messageContents = $("#m").val();
+    var msg = new Message("message", me.Nickname, me.Colour, messageContents);
     socket.emit("chat message", msg);
     $("#messages").append($("<li>").text(msg).addClass("self-message").css("background-color", "rgb(" + me.Colour.r + "," + me.Colour.g + "," + me.Colour.b + ")"));
     $("#m").val("");
@@ -49,7 +50,7 @@ socket.on("chat message", function (msg) {
     var text = "<p class='message-nickname'>";
     text += msg.Nickname;
     text += "</h2><p>";
-    text += msg.Message;
+    text += msg.Contents;
     text += "</p>";
     $("#messages").append($("<li>").html(text).css("background-color", "rgb(" + msg.Colour.r + "," + msg.Colour.g + "," + msg.Colour.b + ")").addClass("message"));
     $(".messages-container").trigger('newMessage');
