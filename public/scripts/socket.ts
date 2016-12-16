@@ -8,7 +8,7 @@ $("form#login-form").submit(function() {
     var msg = {"Nickname": $("#nickname").val()};
     if (me) {   
         msg = me;
-    }
+    } 
     socket.emit("login request", msg);
     $("#login").attr("disabled", true);
     return false;
@@ -16,12 +16,14 @@ $("form#login-form").submit(function() {
 
 $("form#messenger").submit(function() {
     var messageContents = $("#m").val();
-    var msg = new Message("message", me.Nickname, me.Colour, messageContents);
-    socket.emit("chat message", msg);
-    $("#messages").append($("<li>").text(msg.Contents).addClass("self-message").css("background-color", "rgb(" + me.Colour.r + "," + me.Colour.g + "," + me.Colour.b + ")"));
-    $("#m").val("");
-    $(".messages-container").trigger('newMessage');
-    return false;
+    if (messageContents != "") {
+        var msg = new Message("message", me.Nickname, me.Colour, messageContents);
+        socket.emit("chat message", msg);
+        $("#messages").append($("<li>").text(msg.Contents).addClass("self-message").css("background-color", "rgb(" + me.Colour.r + "," + me.Colour.g + "," + me.Colour.b + ")"));
+        $("#m").val("");
+        $(".messages-container").trigger('newMessage');
+        return false;
+    } 
 });
 
 $("#stamps").click(function() {

@@ -74,6 +74,8 @@ form#messenger {
     margin-left: 16px;
     border-radius: 16px;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); }
+  form#messenger #stamps img {
+    width: 50px; }
 
 .messages-container {
   overflow-y: scroll;

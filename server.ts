@@ -41,7 +41,7 @@ io.on('connection', function(socket){
           socket.emit("message list", messages);
           console.log("Logged in Users: " + JSON.stringify(loggedInUsers[j]));
         }
-      }
+      } 
     } else {
       console.log("Login Request: " + JSON.stringify(msg));
       var socketID = socket.id;
@@ -60,7 +60,7 @@ io.on('connection', function(socket){
       }
     }
     socket.on("chat message", function(incomingMessage) {
-      if(incomingMessage) {
+      if(incomingMessage.Contents != "") {
         var chatMessage = incomingMessage;
         messages.push(chatMessage);
         socket.broadcast.emit("chat message", chatMessage);
@@ -74,7 +74,7 @@ io.on('connection', function(socket){
         messages.push(outputMessage);
         socket.broadcast.emit("chat stamp", outputMessage);
         console.log(f.escapeHtml(msg.Nickname) + ": " + outputMessage.Contents);
-      }
+      } 
     });
   });
   socket.on('disconnect', function(){

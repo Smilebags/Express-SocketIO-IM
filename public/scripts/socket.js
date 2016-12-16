@@ -1,3 +1,4 @@
+"use strict";
 var socket = io();
 var loggedInUsers = [];
 var messages = [];
@@ -14,12 +15,14 @@ $("form#login-form").submit(function () {
 });
 $("form#messenger").submit(function () {
     var messageContents = $("#m").val();
-    var msg = new Message("message", me.Nickname, me.Colour, messageContents);
-    socket.emit("chat message", msg);
-    $("#messages").append($("<li>").text(msg.Contents).addClass("self-message").css("background-color", "rgb(" + me.Colour.r + "," + me.Colour.g + "," + me.Colour.b + ")"));
-    $("#m").val("");
-    $(".messages-container").trigger('newMessage');
-    return false;
+    if (messageContents != "") {
+        var msg = new Message("message", me.Nickname, me.Colour, messageContents);
+        socket.emit("chat message", msg);
+        $("#messages").append($("<li>").text(msg.Contents).addClass("self-message").css("background-color", "rgb(" + me.Colour.r + "," + me.Colour.g + "," + me.Colour.b + ")"));
+        $("#m").val("");
+        $(".messages-container").trigger('newMessage');
+        return false;
+    }
 });
 $("#stamps").click(function () {
     var messageContents = 2;
@@ -126,3 +129,4 @@ socket.on('connect', function () {
 socket.on('debug alert', function (msg) {
     alert(msg);
 });
+//# sourceMappingURL=socket.js.map

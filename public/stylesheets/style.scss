@@ -85,6 +85,9 @@ form#messenger {
     }
     #stamps {
         @extend #send;
+        img {
+            width: 50px;
+        }
     }
 }
 .messages-container {

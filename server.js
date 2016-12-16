@@ -3,6 +3,7 @@
 /// <reference path=".vscode/socket.io.d.ts" />
 /// <reference path=".vscode/jquery.d.ts" />
 /// <reference path="public/scripts/functions.ts" />
+"use strict";
 //requires
 var express = require('express');
 var app = express();
@@ -54,7 +55,7 @@ io.on('connection', function (socket) {
             }
         }
         socket.on("chat message", function (incomingMessage) {
-            if (incomingMessage) {
+            if (incomingMessage.Contents != "") {
                 var chatMessage = incomingMessage;
                 messages.push(chatMessage);
                 socket.broadcast.emit("chat message", chatMessage);
@@ -90,3 +91,4 @@ io.on('connection', function (socket) {
 http.listen(port, function () {
     console.log('listening on *:8080');
 });
+//# sourceMappingURL=server.js.map
