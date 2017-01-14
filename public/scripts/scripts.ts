@@ -23,6 +23,9 @@ $(".messages-container").scroll(function(){
     }
     
 });
+$("#stamps").click(function(){
+    $(".stamp-box").toggleClass("open");
+});
 
 
 

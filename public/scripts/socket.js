@@ -1,4 +1,3 @@
-"use strict";
 var socket = io();
 var loggedInUsers = [];
 var messages = [];
@@ -129,4 +128,3 @@ socket.on('connect', function () {
 socket.on('debug alert', function (msg) {
     alert(msg);
 });
-//# sourceMappingURL=socket.js.map

@@ -89,6 +89,19 @@ form#messenger {
             width: 50px;
         }
     }
+    .stamp-box-container {
+        .stamp-box {
+            display:none;
+            position: absolute;
+            height: 100px;
+            width: 100px;
+            background-color: red;
+        }
+        .open {
+            display: flex;
+
+        }
+    }
 }
 .messages-container {
     overflow-y: scroll;

@@ -22,4 +22,7 @@ $(document).ready(function () {
             messagesScrolled = true;
         }
     });
+    $("#stamps").click(function () {
+        $(".stamp-box").toggleClass("open");
+    });
 });

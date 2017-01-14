@@ -87,10 +87,12 @@ io.on('connection', function(socket){
         positionInArray = i;
       }
     }
+    if (user) {
     var msg = new f.Message("disconnect", user.Nickname, user.Colour, "");
     console.log(msg.Nickname +' disconnected.');
     socket.broadcast.emit("user disconnect", msg);
     messages.push(msg);
+    }
     //loggedInUsers.splice(positionInArray, 1);
   });
 });

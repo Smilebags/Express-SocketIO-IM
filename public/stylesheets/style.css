@@ -76,6 +76,14 @@ form#messenger {
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2); }
   form#messenger #stamps img {
     width: 50px; }
+  form#messenger .stamp-box-container .stamp-box {
+    display: none;
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    background-color: red; }
+  form#messenger .stamp-box-container .open {
+    display: flex; }
 
 .messages-container {
   overflow-y: scroll;

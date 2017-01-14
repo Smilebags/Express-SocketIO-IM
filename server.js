@@ -3,7 +3,6 @@
 /// <reference path=".vscode/socket.io.d.ts" />
 /// <reference path=".vscode/jquery.d.ts" />
 /// <reference path="public/scripts/functions.ts" />
-"use strict";
 //requires
 var express = require('express');
 var app = express();
@@ -81,14 +80,15 @@ io.on('connection', function (socket) {
                 positionInArray = i;
             }
         }
-        var msg = new f.Message("disconnect", user.Nickname, user.Colour, "");
-        console.log(msg.Nickname + ' disconnected.');
-        socket.broadcast.emit("user disconnect", msg);
-        messages.push(msg);
+        if (user) {
+            var msg = new f.Message("disconnect", user.Nickname, user.Colour, "");
+            console.log(msg.Nickname + ' disconnected.');
+            socket.broadcast.emit("user disconnect", msg);
+            messages.push(msg);
+        }
         //loggedInUsers.splice(positionInArray, 1);
     });
 });
 http.listen(port, function () {
     console.log('listening on *:8080');
 });
-//# sourceMappingURL=server.js.map
